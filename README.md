@@ -119,11 +119,128 @@ generar los resultados principales.
 
 ## Como levantar el ambiente
 
-<!-- TODO (Ejercicio 1.5) -->
+1. Instalar Docker (con Docker Compose) y Git, y dejar Docker corriendo.
+2. Clonar el fork y entrar a la carpeta:
+
+   ```bash
+   git clone git@github.com:jcdiegolopez/DS-LAB08.git
+   cd DS-LAB08
+   ```
+
+3. Construir y levantar los servicios (la primera vez descarga unos 3 GB):
+
+   ```bash
+   docker compose up --build -d
+   ```
+
+4. Verificar que ambos servicios esten arriba:
+
+   ```bash
+   docker compose ps
+   ```
+
+| Servicio | Contenedor | URL | Para que se usa |
+|---|---|---|---|
+| `lab` | `lab8-lab` | <http://localhost:8888> | JupyterLab con DuckDB, pandas, pyarrow y matplotlib |
+| `metabase` | `lab8-metabase` | <http://localhost:3000> | Tablero y visualizaciones |
+
+Si el puerto 3000 ya esta ocupado en su computadora, Metabase puede usar otro:
+
+```bash
+METABASE_PORT=3001 docker compose up -d      # PowerShell: $env:METABASE_PORT=3001; docker compose up -d
+```
+
+Para ejecutar un comando dentro del ambiente:
+
+```bash
+docker compose exec lab python --version
+docker compose exec lab bash
+```
+
+Para apagar los servicios: `docker compose down`.
+
+### Herramientas disponibles en el contenedor `lab`
+
+| Herramienta | Version |
+|---|---|
+| Python | 3.11.14 |
+| DuckDB | 1.5.5 |
+| pandas | 3.0.6 |
+| pyarrow | 25.0.1 |
+| matplotlib | 3.11.2 |
+| requests | 2.34.2 |
+| JupyterLab | 4.6.4 |
+| curl | 8.14.1 |
+
+Las versiones estan fijadas en `requirements.txt`. Metabase corre en su propio
+contenedor y se conecta a DuckDB mediante el driver indicado en
+`metabase.Dockerfile`.
+
+### Proposito de cada directorio
+
+| Directorio | Proposito |
+|---|---|
+| `data/raw/` | Archivos Parquet tal como los publica la TLC, sin modificar. Se organizan como `<tipo>/<anio>/`. |
+| `data/processed/` | Datos derivados, por ejemplo la base `.duckdb` con la tabla materializada. Se puede regenerar a partir de `raw/`. |
+| `notebooks/` | Notebooks de Jupyter con la exploracion y el analisis. |
+| `scripts/` | Scripts reutilizables: descarga de datos y benchmarks. |
+| `sql/` | Consultas SQL del laboratorio, un archivo por consulta o grupo de consultas. |
+| `docs/` | Documentacion de las consultas, resultados y evidencia del tablero. |
+
+`data/raw/` y `data/processed/` estan en `.gitignore`: los datos no van en Git,
+solo el codigo que permite obtenerlos.
+
+### Por que un ambiente reproducible
+
+Un analisis solo es confiable si otra persona (o uno mismo dentro de seis meses)
+puede obtener los mismos resultados. Con Docker las versiones de Python, DuckDB
+y las librerias son siempre las mismas, sin depender de lo que haya instalado en
+cada computadora. Esto evita errores del tipo "en mi maquina funciona", reduce
+el tiempo de configuracion de cada integrante del equipo y permite repetir el
+proceso completo cuando lleguen datos nuevos.
 
 ## Como descargar los datos
 
-<!-- TODO (Ejercicios 2.6, 5.1 y 8.1) -->
+El script `scripts/download_data.py` baja los archivos mensuales de taxis
+amarillos y verdes desde la fuente original de la TLC. Se ejecuta dentro del
+contenedor:
+
+```bash
+docker compose exec lab python scripts/download_data.py                  # 2026 (por defecto)
+docker compose exec lab python scripts/download_data.py --taxi yellow
+docker compose exec lab python scripts/download_data.py --anios 2024 2025 2026
+```
+
+Los archivos quedan en `data/raw/<tipo>/<anio>/`, por ejemplo
+`data/raw/yellow/2026/yellow_tripdata_2026-01.parquet`. El script se puede
+ejecutar las veces que haga falta: no vuelve a descargar un archivo que ya
+existe.
+
+### Cambios hechos al script proporcionado
+
+- **Anio como parametro.** El anio 2026 estaba escrito en el codigo. Ahora las
+  funciones reciben el anio y la opcion `--anios` permite elegir uno o varios.
+  Agregar un anio nuevo no requiere tocar la logica de descarga.
+- **Verificacion de tamano.** Antes de descargar, el script consulta al
+  servidor el tamano del archivo (`Content-Length`). Si los bytes recibidos no
+  coinciden, descarta el archivo y reintenta, hasta tres veces.
+- Se conservaron los comportamientos que ya traia: consulta al servidor que
+  meses estan publicados, descarga a un archivo `.part` que solo se renombra al
+  terminar, y omision de archivos existentes.
+
+### Como se verifico que la descarga esta completa
+
+1. El resumen final del script reporta cuantos archivos se descargaron, cuantos
+   ya existian, cuantos aun no estan publicados y cuantos fallaron (debe ser 0).
+2. Los meses que la TLC todavia no publica se detectan con una peticion `HEAD`
+   al servidor, no se asumen. Al 8 de octubre de 2026 estaban publicados enero a
+   agosto de 2026, es decir, 8 archivos por tipo de taxi (16 en total).
+3. Cada descarga se compara contra el tamano que informa el servidor, y se
+   comprobo que DuckDB puede leer todos los archivos.
+4. Una segunda ejecucion del script reporta 0 descargados y 16 existentes.
+
+Al dia de esa descarga, 2026 tiene 29,703,355 viajes amarillos y 337,114
+verdes repartidos en esos archivos.
 
 ## Como ejecutar el analisis
 
