@@ -27,7 +27,7 @@ services:
       dockerfile: metabase.Dockerfile
     container_name: lab8-metabase
     ports:
-      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:${METABASE_PORT:-3000}:3000"
     volumes:
       - metabase-data:/home/metabase/data
       - ./data:/workspace/data
