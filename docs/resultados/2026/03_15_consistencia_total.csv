@@ -1,0 +1,12 @@
+taxi,vendor_id,tipo_registro,registros,pct_total_no_cuadra,diferencia_mas_frecuente
+yellow,1,taximetro (pago 1-6),4571690,83.38,-3.25
+yellow,1,sin detalle (Flex Fare),895381,98.43,2.5
+yellow,2,taximetro (pago 1-6),17047857,0.13,2.5
+yellow,2,sin detalle (Flex Fare),6761917,88.19,2.5
+yellow,6,sin detalle (Flex Fare),59390,100.0,12.2
+yellow,7,taximetro (pago 1-6),367120,42.84,1.0
+green,1,taximetro (pago 1-6),28168,97.04,-1.0
+green,1,sin detalle (Flex Fare),528,64.2,2.75
+green,2,taximetro (pago 1-6),260171,0.04,2.5
+green,2,sin detalle (Flex Fare),13400,32.43,2.75
+green,6,sin detalle (Flex Fare),34847,100.0,12.2

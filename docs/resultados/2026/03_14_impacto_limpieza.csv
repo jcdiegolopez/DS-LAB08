@@ -1,0 +1,3 @@
+taxi,anio,registros,r1_fecha_fuera_de_mes,r2_duracion,r3_distancia,r4_montos_no_positivos,r5_total_extremo,r6_velocidad,conservados,descartados,pct_conservado
+yellow,2026,29703355,146,378998,952935,180386,49,7987,28215140,1488215,94.99
+green,2026,337114,98,1338,12281,6196,1,1158,316958,20156,94.02

@@ -1,0 +1,3 @@
+taxi,columna,tipos_fisicos,archivos_con_columna,archivos_totales,desde,hasta
+yellow,request_source,BYTE_ARRAY,3,8,2026-06,2026-08
+green,request_source,BYTE_ARRAY,3,8,2026-06,2026-08
