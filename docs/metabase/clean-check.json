@@ -4,7 +4,7 @@
   "clone": {
     "kind": "fresh local Git clone",
     "cloned_commit": "e47c4b346f17842c842abad50bef81bad3b54c25",
-    "current_local_branch": "codex/benchmark-indicadores",
+    "current_local_branch": "benchmark-indicadores",
     "source": "C:/Users/PC/Desktop/Universidad/DS-LAB08",
     "path": "C:/Users/PC/AppData/Local/Temp/DS-LAB08-clean-check-bf5bf4dbb6534342960ee6acb21300c3",
     "retained": true,
