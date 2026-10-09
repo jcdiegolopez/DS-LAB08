@@ -1,0 +1,21 @@
+taxi,puesto,borough,zona,viajes,pct_del_taxi
+yellow,1,Manhattan,Upper East Side South,1252548,4.44
+yellow,2,Manhattan,Midtown Center,1171287,4.15
+yellow,3,Queens,JFK Airport,1124910,3.99
+yellow,4,Manhattan,Upper East Side North,1112988,3.94
+yellow,5,Manhattan,Penn Station/Madison Sq West,868453,3.08
+yellow,6,Manhattan,Midtown East,864395,3.06
+yellow,7,Manhattan,Times Sq/Theatre District,817167,2.9
+yellow,8,Manhattan,Lincoln Square East,811470,2.88
+yellow,9,Manhattan,East Village,756136,2.68
+yellow,10,Manhattan,Murray Hill,737331,2.61
+green,1,Manhattan,East Harlem North,86855,27.4
+green,2,Manhattan,East Harlem South,41706,13.16
+green,3,Queens,Forest Hills,15623,4.93
+green,4,Manhattan,Central Park,12989,4.1
+green,5,Manhattan,Morningside Heights,12437,3.92
+green,6,Queens,Elmhurst,11122,3.51
+green,7,Manhattan,Central Harlem,10956,3.46
+green,8,Brooklyn,Downtown Brooklyn/MetroTech,10478,3.31
+green,9,Queens,Jamaica,9131,2.88
+green,10,Brooklyn,Fort Greene,8673,2.74
