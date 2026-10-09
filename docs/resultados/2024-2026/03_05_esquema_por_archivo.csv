@@ -1,0 +1,5 @@
+taxi,columna,tipos_fisicos,archivos_con_columna,archivos_totales,desde,hasta
+yellow,cbd_congestion_fee,DOUBLE,20,32,2025-01,2026-08
+yellow,request_source,BYTE_ARRAY,3,32,2026-06,2026-08
+green,cbd_congestion_fee,DOUBLE,20,32,2025-01,2026-08
+green,request_source,BYTE_ARRAY,3,32,2026-06,2026-08
