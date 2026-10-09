@@ -1,0 +1,30 @@
+{
+  "collection_id": 5,
+  "database_id": 2,
+  "dashboard_id": 2,
+  "card_ids": {
+    "07_01_volumen_mensual": 40,
+    "07_02_monto_mensual": 41,
+    "07_03_ticket_periodo_comun": 42,
+    "07_04_viaje_tipico": 43,
+    "07_05_mezcla_pagos": 44,
+    "07_06_propina_tarjeta": 45,
+    "07_07_zonas_top": 46,
+    "07_08_retencion_limpieza": 47
+  },
+  "dashboard_url": "http://localhost:3000/dashboard/2-nyc-taxi-2024-2026",
+  "verification": {
+    "method": "saved and visually checked through the local Metabase interface",
+    "saved_questions": 8,
+    "charts": 6,
+    "tables": 2,
+    "notes": 1,
+    "screenshots": [
+      "docs/img/07_tablero_01.jpg",
+      "docs/img/07_tablero_02.jpg",
+      "docs/img/07_tablero_03.jpg",
+      "docs/img/07_tablero_04.jpg",
+      "docs/img/07_tablero_05.jpg"
+    ]
+  }
+}

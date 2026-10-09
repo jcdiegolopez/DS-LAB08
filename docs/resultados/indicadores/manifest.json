@@ -1,0 +1,269 @@
+{
+  "generado_utc": "2026-10-09T02:07:24.442553+00:00",
+  "duckdb_version": "1.5.5",
+  "origen": "Parquet mediante sql/00_vistas.sql; conexion en memoria",
+  "anios_solicitados": null,
+  "cobertura": [
+    {
+      "taxi": "green",
+      "anio": 2024,
+      "meses": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "archivos": 12
+    },
+    {
+      "taxi": "green",
+      "anio": 2025,
+      "meses": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "archivos": 12
+    },
+    {
+      "taxi": "green",
+      "anio": 2026,
+      "meses": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "archivos": 8
+    },
+    {
+      "taxi": "yellow",
+      "anio": 2024,
+      "meses": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "archivos": 12
+    },
+    {
+      "taxi": "yellow",
+      "anio": 2025,
+      "meses": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "archivos": 12
+    },
+    {
+      "taxi": "yellow",
+      "anio": 2026,
+      "meses": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "archivos": 8
+    }
+  ],
+  "meses_comunes": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "moneda": "USD nominales; total_amount no es utilidad del conductor",
+  "limpieza": "R1-R6 de sql/00_vistas.sql; no elimina duplicados",
+  "consultas": [
+    {
+      "sql": "sql/07_01_volumen_mensual.sql",
+      "sha256": "2f046fc28ad4e3d576d6810dd826742a1e6245c0919e37f1ccf37aa01850e638",
+      "csv": "07_01_volumen_mensual.csv",
+      "filas": 64,
+      "columnas": [
+        "taxi",
+        "anio",
+        "mes",
+        "mes_fecha",
+        "viajes",
+        "dias_calendario",
+        "viajes_por_dia",
+        "pct_del_mes",
+        "variacion_interanual_pct"
+      ],
+      "segundos": 4.1645
+    },
+    {
+      "sql": "sql/07_02_monto_mensual.sql",
+      "sha256": "850ce66bb1e5c982a54209b8ace25332631ec27cd688b16a9086810764c484ce",
+      "csv": "07_02_monto_mensual.csv",
+      "filas": 64,
+      "columnas": [
+        "taxi",
+        "anio",
+        "mes",
+        "mes_fecha",
+        "viajes",
+        "monto_total_usd",
+        "monto_por_dia_usd",
+        "ticket_promedio_usd",
+        "variacion_interanual_pct"
+      ],
+      "segundos": 3.6227
+    },
+    {
+      "sql": "sql/07_03_ticket_periodo_comun.sql",
+      "sha256": "61faa4eadfa5a607455f06139686d7631e8965a250ae4cafe7bf902e185cafff",
+      "csv": "07_03_ticket_periodo_comun.csv",
+      "filas": 6,
+      "columnas": [
+        "taxi",
+        "anio",
+        "meses_comunes",
+        "dias_calendario",
+        "viajes",
+        "viajes_por_dia",
+        "monto_total_usd",
+        "ticket_promedio_usd",
+        "tarifa_promedio_usd",
+        "variacion_ticket_pct",
+        "variacion_viajes_pct"
+      ],
+      "segundos": 11.5868
+    },
+    {
+      "sql": "sql/07_04_viaje_tipico.sql",
+      "sha256": "c635601a237b8503787f244c894a9dca4eef0cf9b758e25d817418da9fcb0851",
+      "csv": "07_04_viaje_tipico.csv",
+      "filas": 6,
+      "columnas": [
+        "taxi",
+        "anio",
+        "meses_comunes",
+        "viajes",
+        "distancia_mediana_mi",
+        "duracion_mediana_min",
+        "velocidad_mediana_mph"
+      ],
+      "segundos": 14.1364
+    },
+    {
+      "sql": "sql/07_05_mezcla_pagos.sql",
+      "sha256": "dfee644b59e1ecbab4448afcfc4ce9cabe7ab5afc6a7e1e6d9c02160cc2f36c9",
+      "csv": "07_05_mezcla_pagos.csv",
+      "filas": 338,
+      "columnas": [
+        "taxi",
+        "anio",
+        "mes",
+        "mes_fecha",
+        "metodo_pago",
+        "viajes",
+        "pct_viajes"
+      ],
+      "segundos": 5.2891
+    },
+    {
+      "sql": "sql/07_06_propina_tarjeta.sql",
+      "sha256": "ee45c1ebe99c91183d5f33fef4ba0103323e1b7f7ca3b5b40a47fffbb2769008",
+      "csv": "07_06_propina_tarjeta.csv",
+      "filas": 6,
+      "columnas": [
+        "taxi",
+        "anio",
+        "meses_comunes",
+        "viajes_tarjeta",
+        "viajes_propina_valida",
+        "propinas_excluidas",
+        "propina_promedio_usd",
+        "propina_pct_mediana",
+        "pct_sin_propina"
+      ],
+      "segundos": 11.4759
+    },
+    {
+      "sql": "sql/07_07_zonas_top.sql",
+      "sha256": "24d9f7edca876b511792bdce28f7e1f77ea8750f27b73175fb2db3d84a30572b",
+      "csv": "07_07_zonas_top.csv",
+      "filas": 30,
+      "columnas": [
+        "taxi",
+        "anio",
+        "location_id",
+        "borough",
+        "zona",
+        "viajes",
+        "rango",
+        "pct_viajes",
+        "meses_comunes"
+      ],
+      "segundos": 13.8276
+    },
+    {
+      "sql": "sql/07_08_retencion_limpieza.sql",
+      "sha256": "ba6dff62709c2bf8097ca18702d5eacc5ecfc5ea4cb12971fe2bbd4f9a6e3c0d",
+      "csv": "07_08_retencion_limpieza.csv",
+      "filas": 64,
+      "columnas": [
+        "taxi",
+        "anio",
+        "mes",
+        "mes_fecha",
+        "registros_originales",
+        "viajes_conservados",
+        "registros_descartados",
+        "pct_conservado"
+      ],
+      "segundos": 4.2905
+    }
+  ]
+}
