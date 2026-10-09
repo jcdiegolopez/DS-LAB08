@@ -281,10 +281,10 @@ cambiar el SQL.
 docker compose exec lab python scripts/run_sql.py sql/03_02_registros.sql
 
 # Ejercicios 3 y 4 sobre 2026 (como se documentaron), guardando cada resultado en CSV
-docker compose exec lab python scripts/run_sql.py sql/03_*.sql sql/04_*.sql --anios 2026 --csv docs/resultados/2026
+docker compose exec lab sh -c 'python scripts/run_sql.py sql/03_*.sql sql/04_*.sql --anios 2026 --csv docs/resultados/2026'
 
 # Las mismas consultas y las del Ejercicio 8 sobre todos los anios descargados
-docker compose exec lab python scripts/run_sql.py sql/03_*.sql sql/04_*.sql sql/08_*.sql --csv docs/resultados/2024-2026
+docker compose exec lab sh -c 'python scripts/run_sql.py sql/03_*.sql sql/04_*.sql sql/08_*.sql --csv docs/resultados/2024-2026'
 ```
 
 `--anios` limita las vistas a esos anios (DuckDB ni abre los demas archivos);
@@ -315,8 +315,92 @@ con.sql("SELECT taxi, count(*) FROM viajes_limpios GROUP BY taxi").show()
 
 ## Como reproducir los benchmarks
 
-<!-- TODO (Ejercicio 6) -->
+Primero descargar Yellow y Green de 2024, 2025 y 2026 y el catalogo de zonas,
+como se indica arriba. Detener Metabase durante la construccion de la base y
+las mediciones para liberar el archivo DuckDB y evitar consultas simultaneas:
+
+```bash
+docker compose stop metabase
+docker compose exec -T lab python scripts/materialize.py
+docker compose exec -T lab python scripts/benchmark.py --repetitions 5
+docker compose start metabase
+```
+
+`materialize.py` crea `data/processed/taxi.duckdb`, con la tabla unificada de
+viajes originales y el catalogo de zonas. Las vistas persistentes `viajes`,
+`viajes_limpios` y `zonas` permiten usar el mismo SQL del analisis en Metabase.
+La vista limpia conserva las reglas R1-R6; la base no se incluye en Git y puede
+reconstruirse. Agregar archivos requiere volver a materializar para actualizar
+este snapshot.
+
+El benchmark ejecuta cuatro consultas de `sql/06_*.sql` sobre Parquet y tabla,
+con un anio (2026), dos (2024 y 2026) y tres (2024-2026). Ambas rutas aplican la
+misma limpieza y comprueban la equivalencia de resultados. Se fijan 4 hilos y
+4 GB como limite de memoria por conexion. Se mide hasta obtener todas las
+filas; la primera corrida se registra aparte y la mediana usa cinco repeticiones
+posteriores alternando el orden de las fuentes. No se vacia la cache del SO:
+la primera corrida no se presenta como una medicion garantizada en frio.
+
+Resultados en `docs/resultados/benchmark/`: `summary.csv` contiene las medianas,
+primeras corridas y rangos; `measurements.csv` todas las mediciones;
+`equivalence.json` las comprobaciones; `materialization.json` el manifiesto
+SHA-256, conteos y costo de construccion; `environment.json` el ambiente medido.
+La interpretacion y las consultas se documentan en
+[Ejercicio 6](docs/ej6-benchmark.md). Los tiempos deben medirse de nuevo en cada
+computadora, no asumirse iguales a los guardados.
 
 ## Como generar los resultados principales
 
-<!-- TODO -->
+Los ejercicios 7 y 8.4 tienen 12 preguntas y ocho indicadores. Sus consultas
+`sql/07_*.sql` funcionan sobre las vistas Parquet del runner o sobre las vistas
+persistentes de la base materializada:
+
+```bash
+docker compose exec -T lab python scripts/export_indicators.py
+docker compose exec -T lab python scripts/validate_indicators.py
+```
+
+El primer script guarda ocho CSV y un manifiesto de cobertura, meses comunes,
+version y hashes del SQL en `docs/resultados/indicadores/`. El segundo comprueba
+consistencia de poblaciones, denominadores, totales de pagos y rankings, sin
+consultar la base. Ver las definiciones e interpretaciones en
+[Ejercicio 7](docs/ej7-indicadores.md).
+
+### Crear el tablero en una instalacion de Metabase
+
+1. Construir `data/processed/taxi.duckdb` con `materialize.py` y dejar Metabase
+   activo. Si se reconstruye la base, detener Metabase antes y arrancarlo al
+   terminar, como en la seccion de benchmarks.
+2. Abrir <http://localhost:3000> y completar la configuracion inicial de la
+   cuenta de administrador. Esta cuenta y los tableros se guardan en el volumen
+   Docker `metabase-data` de cada computadora; no llegan al clonar el fork.
+3. Publicar con el script desde una terminal interactiva:
+
+   ```bash
+   docker compose exec lab python scripts/publish_metabase.py --url http://metabase:3000 --ids-output docs/metabase/installation.json
+   ```
+
+   El script pide el correo y la contrasena de esa cuenta. No los guarda en los
+   archivos ni imprime la sesion. Crea o actualiza solo los objetos del proyecto
+   por sus nombres, conservando sus IDs al repetirlo. La conexion `DuckDB Lab 8`
+   usa `/workspace/data/processed/taxi.duckdb` en **solo lectura**.
+4. Abrir la coleccion `Lab 8 - Indicadores` y el tablero `NYC Taxi | 2024-2026`.
+   Contiene seis graficos, dos tablas y una nota de cobertura. La evidencia de
+   esta instalacion y las instrucciones manuales estan en
+   [actualizacion del tablero](docs/ej8-tablero.md).
+
+Para generar/revisar la especificacion portable sin iniciar sesion:
+
+```bash
+docker compose exec -T lab python scripts/publish_metabase.py --dry-run
+```
+
+La especificacion en `docs/metabase/dashboard-spec.json` incluye consultas,
+visualizaciones y posiciones. Cada instalacion asigna sus propios IDs.
+Para incorporar meses nuevos, ejecutar de nuevo la descarga, reconstruir la
+base con Metabase detenido, exportar/validar indicadores y volver a publicar.
+Las comparaciones anuales usan los meses presentes en todos los anios y tipos;
+las series mensuales muestran toda la cobertura, sin convertir meses ausentes
+en ceros. Los resultados actuales tienen 2024 y 2025 completos y enero-agosto
+de 2026. Las respuestas 9.3, 9.4 y 9.6 se encuentran en
+[discusion](docs/ej9-discusion.md).

@@ -1,0 +1,360 @@
+{
+  "spec_version": 1,
+  "api_target": "Metabase 0.63 (esquema local /api/docs/openapi.json)",
+  "collection": {
+    "name": "Lab 8 - Indicadores",
+    "description": "Ejercicios 7 y 8.4 · NYC Yellow y Green, 2024–2026"
+  },
+  "database": {
+    "name": "DuckDB Lab 8",
+    "engine": "duckdb",
+    "details": {
+      "database_file": "/workspace/data/processed/taxi.duckdb",
+      "read_only": true,
+      "memory_limit": "4GB",
+      "init_sql": "SET threads=4;"
+    }
+  },
+  "dashboard": {
+    "name": "NYC Taxi | 2024-2026",
+    "description": "Ocho indicadores · Yellow y Green · cobertura parcial 2026 y comparación por meses comunes.",
+    "width": "full",
+    "parameters": [],
+    "grid_columns": 24,
+    "note": {
+      "text": "**Cobertura:** 2024–2025 completos; 2026 enero–agosto. Anuales: enero–agosto común; mensuales: cobertura disponible/día calendario. USD nominales: cobros, no utilidad. Limpieza R1–R6; propinas solo tarjeta; pagos sin detalle incluidos.",
+      "position": {
+        "col": 0,
+        "row": 0,
+        "size_x": 24,
+        "size_y": 4
+      }
+    }
+  },
+  "coverage": {
+    "green/2024": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "green/2025": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "green/2026": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "yellow/2024": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "yellow/2025": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "yellow/2026": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "common_months": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "cards": [
+    {
+      "key": "07_01_volumen_mensual",
+      "name": "I1 · Viajes por día calendario",
+      "description": "Todos los meses disponibles. Denominador: días calendario del mes; no se rellenan meses ausentes con cero.",
+      "display": "line",
+      "visualization_settings": {
+        "graph.dimensions": [
+          "mes_fecha",
+          "taxi"
+        ],
+        "graph.metrics": [
+          "viajes_por_dia"
+        ],
+        "graph.show_values": false,
+        "graph.y_axis.title_text": "Viajes / día",
+        "graph.x_axis.title_text": "Mes del archivo",
+        "graph.show_goal": false,
+        "graph.show_trendline": false,
+        "graph.colors": [
+          "#2A9D8F",
+          "#E9B949"
+        ]
+      },
+      "sql_file": "sql/07_01_volumen_mensual.sql",
+      "sql_sha256": "fa7292a23bd9188117d0a97e0ff541c98ac7763fca4abe79494d1d5129d62dfe",
+      "sql": "-- I1: volumen de viajes validos y participacion de cada taxi por mes.\n-- Fuente: viajes_limpios. Usa todos los meses disponibles; los meses ausentes\n-- no se convierten en cero. Denominador: dias calendario, incluidos sin viajes.\nWITH mensual AS (\n    SELECT taxi, anio_archivo AS anio, mes_archivo AS mes,\n           make_date(anio_archivo, mes_archivo, 1) AS mes_fecha,\n           count(*) AS viajes\n    FROM viajes_limpios\n    GROUP BY taxi, anio_archivo, mes_archivo\n)\nSELECT m.*,\n       day(last_day(m.mes_fecha)) AS dias_calendario,\n       round(m.viajes / day(last_day(m.mes_fecha)), 2) AS viajes_por_dia,\n       round(100.0 * m.viajes / sum(m.viajes) OVER (PARTITION BY m.anio, m.mes), 3) AS pct_del_mes,\n       round(100.0 * (m.viajes - a.viajes) / nullif(a.viajes, 0), 2) AS variacion_interanual_pct\nFROM mensual m\nLEFT JOIN mensual a ON a.taxi = m.taxi AND a.anio = m.anio - 1 AND a.mes = m.mes\nORDER BY m.mes_fecha, m.taxi;",
+      "position": {
+        "col": 0,
+        "row": 4,
+        "size_x": 12,
+        "size_y": 8
+      }
+    },
+    {
+      "key": "07_02_monto_mensual",
+      "name": "I2 · Monto registrado por día",
+      "description": "Total registrado dividido entre días calendario. Incluye tarifas, impuestos, peajes, recargos y propina registrada; no mide utilidad.",
+      "display": "line",
+      "visualization_settings": {
+        "graph.dimensions": [
+          "mes_fecha",
+          "taxi"
+        ],
+        "graph.metrics": [
+          "monto_por_dia_usd"
+        ],
+        "graph.show_values": false,
+        "graph.y_axis.title_text": "USD nominales / día",
+        "graph.x_axis.title_text": "Mes del archivo",
+        "graph.show_goal": false,
+        "graph.show_trendline": false,
+        "graph.colors": [
+          "#2A9D8F",
+          "#E9B949"
+        ]
+      },
+      "sql_file": "sql/07_02_monto_mensual.sql",
+      "sql_sha256": "1da1c5815d11df46942e87dcbe2173025e0e05c7ff32e3a3fce280d89a10371c",
+      "sql": "-- I2: monto registrado total y por dia calendario (USD nominales).\n-- Fuente: viajes_limpios, total_amount. Incluye tarifa, impuestos, peajes,\n-- recargos y propina registrada: NO mide utilidad ni ingreso neto del conductor.\nWITH mensual AS (\n    SELECT taxi, anio_archivo AS anio, mes_archivo AS mes,\n           make_date(anio_archivo, mes_archivo, 1) AS mes_fecha,\n           count(*) AS viajes, sum(total_amount) AS monto_total,\n           avg(total_amount) AS ticket_promedio\n    FROM viajes_limpios\n    GROUP BY taxi, anio_archivo, mes_archivo\n)\nSELECT m.taxi, m.anio, m.mes, m.mes_fecha, m.viajes,\n       round(m.monto_total, 2) AS monto_total_usd,\n       round(m.monto_total / day(last_day(m.mes_fecha)), 2) AS monto_por_dia_usd,\n       round(m.ticket_promedio, 2) AS ticket_promedio_usd,\n       round(100.0 * (m.monto_total - a.monto_total) / nullif(a.monto_total, 0), 2) AS variacion_interanual_pct\nFROM mensual m\nLEFT JOIN mensual a ON a.taxi = m.taxi AND a.anio = m.anio - 1 AND a.mes = m.mes\nORDER BY m.mes_fecha, m.taxi;",
+      "position": {
+        "col": 12,
+        "row": 4,
+        "size_x": 12,
+        "size_y": 8
+      }
+    },
+    {
+      "key": "07_03_ticket_periodo_comun",
+      "name": "I3 · Ticket promedio en meses comunes",
+      "description": "Promedio ponderado por viajes, usando solo meses presentes en todas las combinaciones taxi-año. Los meses se muestran en el resultado SQL.",
+      "display": "bar",
+      "visualization_settings": {
+        "graph.dimensions": [
+          "anio",
+          "taxi"
+        ],
+        "graph.metrics": [
+          "ticket_promedio_usd"
+        ],
+        "graph.show_values": true,
+        "graph.y_axis.title_text": "USD nominales / viaje",
+        "graph.x_axis.title_text": "Año",
+        "graph.show_goal": false,
+        "graph.show_trendline": false,
+        "graph.colors": [
+          "#2A9D8F",
+          "#E9B949"
+        ],
+        "stackable.stack_type": null
+      },
+      "sql_file": "sql/07_03_ticket_periodo_comun.sql",
+      "sql_sha256": "a25b5c6bb139603366c3ceaeaa4dcad447a3c64ce78462da379eccb4b3a49425",
+      "sql": "-- I3: ticket promedio por taxi/anio en meses disponibles en TODAS las\n-- combinaciones taxi-anio. Fuente: viajes (cobertura) y viajes_limpios (metricas).\n-- No compara el total de un anio completo con un anio parcial.\nWITH cobertura AS (\n    SELECT DISTINCT taxi, anio_archivo AS anio, mes_archivo AS mes FROM viajes\n),\nmeses_comunes AS (\n    SELECT mes FROM cobertura GROUP BY mes\n    HAVING count(*) = (SELECT count(*) FROM (SELECT DISTINCT taxi, anio FROM cobertura))\n),\nperiodo AS (\n    SELECT string_agg(lpad(mes::VARCHAR, 2, '0'), ', ' ORDER BY mes) AS meses_comunes\n    FROM meses_comunes\n),\ndias AS (\n    SELECT a.anio, sum(day(last_day(make_date(a.anio, m.mes, 1)))) AS dias_calendario\n    FROM (SELECT DISTINCT anio FROM cobertura) a CROSS JOIN meses_comunes m\n    GROUP BY a.anio\n),\nresumen AS (\n    SELECT taxi, anio_archivo AS anio, count(*) AS viajes,\n           sum(total_amount) AS monto_total, avg(total_amount) AS ticket_promedio,\n           avg(fare_amount) AS tarifa_promedio\n    FROM viajes_limpios WHERE mes_archivo IN (SELECT mes FROM meses_comunes)\n    GROUP BY taxi, anio_archivo\n)\nSELECT r.taxi, r.anio, p.meses_comunes, d.dias_calendario, r.viajes,\n       round(r.viajes / d.dias_calendario, 2) AS viajes_por_dia,\n       round(r.monto_total, 2) AS monto_total_usd,\n       round(r.ticket_promedio, 2) AS ticket_promedio_usd,\n       round(r.tarifa_promedio, 2) AS tarifa_promedio_usd,\n       round(100.0 * (r.ticket_promedio - a.ticket_promedio) / nullif(a.ticket_promedio, 0), 2) AS variacion_ticket_pct,\n       round(100.0 * (r.viajes - a.viajes) / nullif(a.viajes, 0), 2) AS variacion_viajes_pct\nFROM resumen r CROSS JOIN periodo p JOIN dias d USING (anio)\nLEFT JOIN resumen a ON a.taxi = r.taxi AND a.anio = r.anio - 1\nORDER BY r.anio, r.taxi;",
+      "position": {
+        "col": 0,
+        "row": 12,
+        "size_x": 12,
+        "size_y": 8
+      }
+    },
+    {
+      "key": "07_04_viaje_tipico",
+      "name": "I4 · Duración del viaje típico",
+      "description": "Mediana aproximada de duración en meses comunes. El resultado SQL también contiene distancia y velocidad medianas.",
+      "display": "bar",
+      "visualization_settings": {
+        "graph.dimensions": [
+          "anio",
+          "taxi"
+        ],
+        "graph.metrics": [
+          "duracion_mediana_min"
+        ],
+        "graph.show_values": true,
+        "graph.y_axis.title_text": "Minutos, mediana aproximada",
+        "graph.x_axis.title_text": "Año",
+        "graph.show_goal": false,
+        "graph.show_trendline": false,
+        "graph.colors": [
+          "#2A9D8F",
+          "#E9B949"
+        ],
+        "stackable.stack_type": null
+      },
+      "sql_file": "sql/07_04_viaje_tipico.sql",
+      "sql_sha256": "ae1f2cc851ea4c4e06c10dac27b7a6d17191671c219e7c271d1fb491f5f7ab89",
+      "sql": "-- I4: distancia, duracion y velocidad medianas por taxi/anio en periodo comun.\n-- Fuente: viajes_limpios. approx_quantile evita ordenar millones de filas.\n-- La mediana de velocidades individuales no equivale al cociente de medianas.\nWITH cobertura AS (\n    SELECT DISTINCT taxi, anio_archivo AS anio, mes_archivo AS mes FROM viajes\n),\nmeses_comunes AS (\n    SELECT mes FROM cobertura GROUP BY mes\n    HAVING count(*) = (SELECT count(*) FROM (SELECT DISTINCT taxi, anio FROM cobertura))\n),\nperiodo AS (\n    SELECT string_agg(lpad(mes::VARCHAR, 2, '0'), ', ' ORDER BY mes) AS meses_comunes\n    FROM meses_comunes\n)\nSELECT taxi, anio_archivo AS anio, p.meses_comunes, count(*) AS viajes,\n       round(approx_quantile(trip_distance, 0.5), 2) AS distancia_mediana_mi,\n       round(approx_quantile(duracion_min, 0.5), 2) AS duracion_mediana_min,\n       round(approx_quantile(trip_distance / (duracion_min / 60.0), 0.5), 2) AS velocidad_mediana_mph\nFROM viajes_limpios CROSS JOIN periodo p\nWHERE mes_archivo IN (SELECT mes FROM meses_comunes)\nGROUP BY taxi, anio_archivo, p.meses_comunes\nORDER BY anio, taxi;",
+      "position": {
+        "col": 12,
+        "row": 12,
+        "size_x": 12,
+        "size_y": 8
+      }
+    },
+    {
+      "key": "07_05_mezcla_pagos",
+      "name": "I5 · Mezcla mensual de métodos de pago",
+      "description": "Porcentaje dentro de cada taxi y mes. NULL/0 se mantienen como sin detalle. La tabla permite ver simultáneamente Yellow y Green sin mezclar denominadores.",
+      "display": "table",
+      "visualization_settings": {},
+      "sql_file": "sql/07_05_mezcla_pagos.sql",
+      "sql_sha256": "2f5c0a3d142b1ebeb097185feef50d505c78e65a89f6d3eae6865475d3bfe2b0",
+      "sql": "-- I5: distribucion mensual de pagos. Fuente: viajes_limpios.\n-- NULL/0 se muestran como sin detalle; otros codigos inesperados se conservan.\n-- El porcentaje usa TODOS los viajes validos del taxi/mes como denominador.\nWITH pagos AS (\n    SELECT taxi, anio_archivo AS anio, mes_archivo AS mes,\n           make_date(anio_archivo, mes_archivo, 1) AS mes_fecha,\n           CASE\n               WHEN coalesce(payment_type, 0) = 0 THEN 'Sin detalle (NULL/0)'\n               WHEN payment_type = 1 THEN 'Tarjeta'\n               WHEN payment_type = 2 THEN 'Efectivo'\n               WHEN payment_type = 3 THEN 'Sin cargo'\n               WHEN payment_type = 4 THEN 'Disputa'\n               WHEN payment_type = 5 THEN 'Desconocido (5)'\n               WHEN payment_type = 6 THEN 'Viaje anulado (6)'\n               ELSE 'Otro codigo'\n           END AS metodo_pago,\n           count(*) AS viajes\n    FROM viajes_limpios\n    GROUP BY taxi, anio_archivo, mes_archivo, metodo_pago\n)\nSELECT *, round(100.0 * viajes / sum(viajes) OVER (PARTITION BY taxi, anio, mes), 3) AS pct_viajes\nFROM pagos\nORDER BY mes_fecha, taxi, metodo_pago;",
+      "position": {
+        "col": 0,
+        "row": 20,
+        "size_x": 12,
+        "size_y": 8
+      }
+    },
+    {
+      "key": "07_06_propina_tarjeta",
+      "name": "I6 · Propina con tarjeta sobre tarifa",
+      "description": "Solo tarjeta, meses comunes. Mantiene propinas cero; excluye nulas/negativas. Las propinas en efectivo no están registradas en los datos TLC.",
+      "display": "bar",
+      "visualization_settings": {
+        "graph.dimensions": [
+          "anio",
+          "taxi"
+        ],
+        "graph.metrics": [
+          "propina_pct_mediana"
+        ],
+        "graph.show_values": true,
+        "graph.y_axis.title_text": "% de fare_amount, mediana aproximada",
+        "graph.x_axis.title_text": "Año",
+        "graph.show_goal": false,
+        "graph.show_trendline": false,
+        "graph.colors": [
+          "#2A9D8F",
+          "#E9B949"
+        ],
+        "stackable.stack_type": null
+      },
+      "sql_file": "sql/07_06_propina_tarjeta.sql",
+      "sql_sha256": "87cb30bfd05c78e238f5c5005666d194409f7a96b2ec1803d1e80548e6447db0",
+      "sql": "-- I6: propina registrada con tarjeta, como porcentaje de fare_amount.\n-- Fuente: viajes_limpios. Solo payment_type=1; las propinas en efectivo no\n-- aparecen en los datos TLC. Mantiene ceros, excluye nulos/negativos del calculo\n-- de propina y reporta su numero. Usa periodo comun y medianas aproximadas.\nWITH cobertura AS (\n    SELECT DISTINCT taxi, anio_archivo AS anio, mes_archivo AS mes FROM viajes\n),\nmeses_comunes AS (\n    SELECT mes FROM cobertura GROUP BY mes\n    HAVING count(*) = (SELECT count(*) FROM (SELECT DISTINCT taxi, anio FROM cobertura))\n),\nperiodo AS (\n    SELECT string_agg(lpad(mes::VARCHAR, 2, '0'), ', ' ORDER BY mes) AS meses_comunes\n    FROM meses_comunes\n)\nSELECT taxi, anio_archivo AS anio, p.meses_comunes,\n       count(*) AS viajes_tarjeta,\n       count(*) FILTER (WHERE tip_amount >= 0) AS viajes_propina_valida,\n       count(*) FILTER (WHERE tip_amount IS NULL OR tip_amount < 0) AS propinas_excluidas,\n       round(avg(tip_amount) FILTER (WHERE tip_amount >= 0), 2) AS propina_promedio_usd,\n       round(approx_quantile(100.0 * tip_amount / fare_amount, 0.5)\n             FILTER (WHERE tip_amount >= 0), 2) AS propina_pct_mediana,\n       round(100.0 * count(*) FILTER (WHERE tip_amount = 0)\n             / nullif(count(*) FILTER (WHERE tip_amount >= 0), 0), 2) AS pct_sin_propina\nFROM viajes_limpios CROSS JOIN periodo p\nWHERE mes_archivo IN (SELECT mes FROM meses_comunes) AND payment_type = 1\nGROUP BY taxi, anio_archivo, p.meses_comunes\nORDER BY anio, taxi;",
+      "position": {
+        "col": 12,
+        "row": 20,
+        "size_x": 12,
+        "size_y": 8
+      }
+    },
+    {
+      "key": "07_07_zonas_top",
+      "name": "I7 · Cinco zonas principales de recogida",
+      "description": "Cinco zonas por taxi y año en meses comunes. Los porcentajes usan todos los viajes del taxi-año; conserva zonas sin catálogo.",
+      "display": "table",
+      "visualization_settings": {},
+      "sql_file": "sql/07_07_zonas_top.sql",
+      "sql_sha256": "ca8d0443ff90201b31d47a8c1cb6665b5e2727789387fcf730dead816a6c786d",
+      "sql": "-- I7: cinco zonas de recogida con mas viajes por taxi/anio en periodo comun.\n-- Fuente: viajes_limpios + zonas; LEFT JOIN conserva IDs sin catalogo.\n-- Ranking y porcentaje incluyen zonas desconocidas, que permanecen visibles.\nWITH cobertura AS (\n    SELECT DISTINCT taxi, anio_archivo AS anio, mes_archivo AS mes FROM viajes\n),\nmeses_comunes AS (\n    SELECT mes FROM cobertura GROUP BY mes\n    HAVING count(*) = (SELECT count(*) FROM (SELECT DISTINCT taxi, anio FROM cobertura))\n),\nperiodo AS (\n    SELECT string_agg(lpad(mes::VARCHAR, 2, '0'), ', ' ORDER BY mes) AS meses_comunes\n    FROM meses_comunes\n),\nconteo AS (\n    SELECT v.taxi, v.anio_archivo AS anio, v.pu_location_id AS location_id,\n           coalesce(z.borough, 'Sin catalogo') AS borough,\n           coalesce(z.zona, 'Sin catalogo') AS zona, count(*) AS viajes\n    FROM viajes_limpios v LEFT JOIN zonas z ON v.pu_location_id = z.location_id\n    WHERE v.mes_archivo IN (SELECT mes FROM meses_comunes)\n    GROUP BY v.taxi, v.anio_archivo, v.pu_location_id, z.borough, z.zona\n),\nranking AS (\n    SELECT *, row_number() OVER (PARTITION BY taxi, anio ORDER BY viajes DESC, location_id NULLS LAST) AS rango,\n           round(100.0 * viajes / sum(viajes) OVER (PARTITION BY taxi, anio), 3) AS pct_viajes\n    FROM conteo\n)\nSELECT r.*, p.meses_comunes\nFROM ranking r CROSS JOIN periodo p WHERE rango <= 5\nORDER BY anio, taxi, rango;",
+      "position": {
+        "col": 0,
+        "row": 28,
+        "size_x": 12,
+        "size_y": 8
+      }
+    },
+    {
+      "key": "07_08_retencion_limpieza",
+      "name": "I8 · Registros conservados tras limpieza",
+      "description": "Viajes conservados / registros originales de cada taxi-mes después de R1–R6. Los descartes no equivalen necesariamente a viajes inexistentes.",
+      "display": "line",
+      "visualization_settings": {
+        "graph.dimensions": [
+          "mes_fecha",
+          "taxi"
+        ],
+        "graph.metrics": [
+          "pct_conservado"
+        ],
+        "graph.show_values": false,
+        "graph.y_axis.title_text": "% de registros originales",
+        "graph.x_axis.title_text": "Mes del archivo",
+        "graph.show_goal": false,
+        "graph.show_trendline": false,
+        "graph.colors": [
+          "#2A9D8F",
+          "#E9B949"
+        ],
+        "graph.y_axis.auto_range": false,
+        "graph.y_axis.min": 0,
+        "graph.y_axis.max": 100
+      },
+      "sql_file": "sql/07_08_retencion_limpieza.sql",
+      "sql_sha256": "0c817d5af30aa7aceff69779763a464fa502fac8db4d7bb0e5cdcae60894143f",
+      "sql": "-- I8: porcentaje mensual conservado tras R1-R6 (sql/00_vistas.sql).\n-- Fuente: viajes y viajes_limpios. Mide cobertura de los indicadores respecto\n-- al archivo original; los descartes no son necesariamente viajes inexistentes.\nWITH crudos AS (\n    SELECT taxi, anio_archivo AS anio, mes_archivo AS mes, count(*) AS registros_originales\n    FROM viajes GROUP BY taxi, anio_archivo, mes_archivo\n),\nlimpios AS (\n    SELECT taxi, anio_archivo AS anio, mes_archivo AS mes, count(*) AS viajes_conservados\n    FROM viajes_limpios GROUP BY taxi, anio_archivo, mes_archivo\n)\nSELECT c.taxi, c.anio, c.mes, make_date(c.anio, c.mes, 1) AS mes_fecha,\n       c.registros_originales, coalesce(l.viajes_conservados, 0) AS viajes_conservados,\n       c.registros_originales - coalesce(l.viajes_conservados, 0) AS registros_descartados,\n       round(100.0 * coalesce(l.viajes_conservados, 0) / c.registros_originales, 3) AS pct_conservado\nFROM crudos c LEFT JOIN limpios l USING (taxi, anio, mes)\nORDER BY mes_fecha, taxi;",
+      "position": {
+        "col": 12,
+        "row": 28,
+        "size_x": 12,
+        "size_y": 8
+      }
+    }
+  ]
+}

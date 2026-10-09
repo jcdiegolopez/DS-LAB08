@@ -1,0 +1,238 @@
+{
+  "checked_at_utc": "2026-10-09T02:20:30.281639+00:00",
+  "isolation": {
+    "container": "lab8-metabase-repro-check",
+    "port": 3001,
+    "data_mount": "read-only",
+    "app_database": "/tmp/repro-check/metabase.db",
+    "production_account_used": false,
+    "production_volume_used": false
+  },
+  "status": "passed",
+  "image_id": "sha256:121e9b4fcc482a84ad34a6913cf16ddc14c080ce99715a7ecc63b5c87981df92",
+  "metabase_version": "v0.63.19",
+  "same_ids_after_two_publications": true,
+  "counts": {
+    "saved_questions": 8,
+    "charts": 6,
+    "tables": 2,
+    "notes": 1,
+    "dashboards": 1
+  },
+  "queries": [
+    {
+      "key": "07_01_volumen_mensual",
+      "display": "line",
+      "status": "completed",
+      "rows": 64,
+      "columns": [
+        "taxi",
+        "anio",
+        "mes",
+        "mes_fecha",
+        "viajes",
+        "dias_calendario",
+        "viajes_por_dia",
+        "pct_del_mes",
+        "variacion_interanual_pct"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "taxis": [
+        "green",
+        "yellow"
+      ],
+      "seconds": 6.29
+    },
+    {
+      "key": "07_02_monto_mensual",
+      "display": "line",
+      "status": "completed",
+      "rows": 64,
+      "columns": [
+        "taxi",
+        "anio",
+        "mes",
+        "mes_fecha",
+        "viajes",
+        "monto_total_usd",
+        "monto_por_dia_usd",
+        "ticket_promedio_usd",
+        "variacion_interanual_pct"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "taxis": [
+        "green",
+        "yellow"
+      ],
+      "seconds": 1.958
+    },
+    {
+      "key": "07_03_ticket_periodo_comun",
+      "display": "bar",
+      "status": "completed",
+      "rows": 6,
+      "columns": [
+        "taxi",
+        "anio",
+        "meses_comunes",
+        "dias_calendario",
+        "viajes",
+        "viajes_por_dia",
+        "monto_total_usd",
+        "ticket_promedio_usd",
+        "tarifa_promedio_usd",
+        "variacion_ticket_pct",
+        "variacion_viajes_pct"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "taxis": [
+        "green",
+        "yellow"
+      ],
+      "seconds": 1.92
+    },
+    {
+      "key": "07_04_viaje_tipico",
+      "display": "bar",
+      "status": "completed",
+      "rows": 6,
+      "columns": [
+        "taxi",
+        "anio",
+        "meses_comunes",
+        "viajes",
+        "distancia_mediana_mi",
+        "duracion_mediana_min",
+        "velocidad_mediana_mph"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "taxis": [
+        "green",
+        "yellow"
+      ],
+      "seconds": 5.979
+    },
+    {
+      "key": "07_05_mezcla_pagos",
+      "display": "table",
+      "status": "completed",
+      "rows": 338,
+      "columns": [
+        "taxi",
+        "anio",
+        "mes",
+        "mes_fecha",
+        "metodo_pago",
+        "viajes",
+        "pct_viajes"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "taxis": [
+        "green",
+        "yellow"
+      ],
+      "seconds": 4.824
+    },
+    {
+      "key": "07_06_propina_tarjeta",
+      "display": "bar",
+      "status": "completed",
+      "rows": 6,
+      "columns": [
+        "taxi",
+        "anio",
+        "meses_comunes",
+        "viajes_tarjeta",
+        "viajes_propina_valida",
+        "propinas_excluidas",
+        "propina_promedio_usd",
+        "propina_pct_mediana",
+        "pct_sin_propina"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "taxis": [
+        "green",
+        "yellow"
+      ],
+      "seconds": 3.017
+    },
+    {
+      "key": "07_07_zonas_top",
+      "display": "table",
+      "status": "completed",
+      "rows": 30,
+      "columns": [
+        "taxi",
+        "anio",
+        "location_id",
+        "borough",
+        "zona",
+        "viajes",
+        "rango",
+        "pct_viajes",
+        "meses_comunes"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "taxis": [
+        "green",
+        "yellow"
+      ],
+      "seconds": 3.312
+    },
+    {
+      "key": "07_08_retencion_limpieza",
+      "display": "line",
+      "status": "completed",
+      "rows": 64,
+      "columns": [
+        "taxi",
+        "anio",
+        "mes",
+        "mes_fecha",
+        "registros_originales",
+        "viajes_conservados",
+        "registros_descartados",
+        "pct_conservado"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "taxis": [
+        "green",
+        "yellow"
+      ],
+      "seconds": 2.302
+    }
+  ],
+  "ephemeral_container_removed": true
+}

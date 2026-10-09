@@ -1,0 +1,250 @@
+{
+  "checked_at_utc": "2026-10-09T02:45:03.630Z",
+  "status": "passed",
+  "clone": {
+    "kind": "fresh local Git clone",
+    "cloned_commit": "e47c4b346f17842c842abad50bef81bad3b54c25",
+    "current_local_branch": "codex/benchmark-indicadores",
+    "source": "C:/Users/PC/Desktop/Universidad/DS-LAB08",
+    "path": "C:/Users/PC/AppData/Local/Temp/DS-LAB08-clean-check-bf5bf4dbb6534342960ee6acb21300c3",
+    "retained": true,
+    "clone_command": "git clone --no-hardlinks --single-branch --branch <branch-at-verified-commit> <local-repository> <unique-TEMP-directory>"
+  },
+  "runtime": {
+    "image": "ds-lab08-lab",
+    "image_id": "sha256:2281940dce18141e839d56cdba3b203ff890665334bf00edede03cb383e276ba",
+    "network": "none",
+    "containers": "docker run --rm; existing Metabase kept running"
+  },
+  "data": {
+    "mode": "existing local data reused through a read-only bind mount",
+    "source": "C:/Users/PC/Desktop/Universidad/DS-LAB08/data",
+    "container_mount": "/workspace/data",
+    "read_only": true,
+    "parquet_files": 64,
+    "downloaded_during_check": false,
+    "database_materialization_check": "synthetic fixtures and temporary database inside ephemeral container /tmp",
+    "regenerated_csv_destination": "docs/resultados/indicadores in the retained clone only"
+  },
+  "checks": [
+    {
+      "command": "docker run --rm --network none --mount type=bind,source=<local-clone>,target=/workspace --mount type=bind,source=<existing-local-data>,target=/workspace/data,readonly --workdir /workspace ds-lab08-lab python scripts/validate_indicators.py",
+      "exit_code": 0,
+      "status": "passed",
+      "wall_time_seconds": 0.7411784,
+      "output_summary": "10 invariant groups passed; 64 monthly groups, 6 annual groups, common months January-August."
+    },
+    {
+      "command": "docker run --rm --network none --mount type=bind,source=<local-clone>,target=/workspace --mount type=bind,source=<existing-local-data>,target=/workspace/data,readonly --workdir /workspace ds-lab08-lab python scripts/validate_materialization.py -v",
+      "exit_code": 0,
+      "status": "passed",
+      "wall_time_seconds": 2.0556384,
+      "output_summary": "Atomic rebuild regression passed: failed rebuild preserves previous tables/views and subsequent rebuild succeeds; synthetic temporary fixtures only."
+    },
+    {
+      "command": "docker run --rm --network none --mount type=bind,source=<local-clone>,target=/workspace --mount type=bind,source=<existing-local-data>,target=/workspace/data,readonly --workdir /workspace ds-lab08-lab python scripts/publish_metabase.py --dry-run",
+      "exit_code": 0,
+      "status": "passed",
+      "wall_time_seconds": 0.7658714,
+      "output_summary": "Portable specification valid: 8 queries, 6 charts, 2 tables and non-overlapping dashboard grid; dry-run executed in specified source scope."
+    },
+    {
+      "command": "docker run --rm --network none --mount type=bind,source=<local-clone>,target=/workspace --mount type=bind,source=<existing-local-data>,target=/workspace/data,readonly --workdir /workspace ds-lab08-lab python scripts/export_indicators.py",
+      "exit_code": 0,
+      "status": "passed",
+      "output_summary": "All eight indicator CSVs and manifest regenerated from Parquet; command returned 0."
+    },
+    {
+      "command": "docker run --rm --network none --mount type=bind,source=<local-clone>,target=/workspace --mount type=bind,source=<existing-local-data>,target=/workspace/data,readonly --workdir /workspace ds-lab08-lab python scripts/validate_indicators.py",
+      "phase": "after_fresh_export",
+      "exit_code": 0,
+      "status": "passed",
+      "wall_time_seconds": 0.7237844,
+      "output_summary": "10 invariant groups passed; 64 monthly groups, 6 annual groups, common months January-August."
+    },
+    {
+      "command": "docker run --rm --network none --mount type=bind,source=<current-working-tree>,target=/workspace --mount type=bind,source=<existing-local-data>,target=/workspace/data,readonly --workdir /workspace ds-lab08-lab python scripts/publish_metabase.py --dry-run --output /tmp/clean-dashboard-spec.json",
+      "scope": "Updated publisher in current working tree after cosmetic collection/title labels changed; output only in ephemeral container /tmp.",
+      "exit_code": 0,
+      "status": "passed",
+      "wall_time_seconds": 1.042945,
+      "output_summary": "Portable specification valid: 8 queries, 6 charts, 2 tables and non-overlapping dashboard grid; dry-run executed in specified source scope."
+    }
+  ],
+  "fresh_export": {
+    "duckdb_version": "1.5.5",
+    "coverage": [
+      {
+        "taxi": "green",
+        "anio": 2024,
+        "meses": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "archivos": 12
+      },
+      {
+        "taxi": "green",
+        "anio": 2025,
+        "meses": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "archivos": 12
+      },
+      {
+        "taxi": "green",
+        "anio": 2026,
+        "meses": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "archivos": 8
+      },
+      {
+        "taxi": "yellow",
+        "anio": 2024,
+        "meses": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "archivos": 12
+      },
+      {
+        "taxi": "yellow",
+        "anio": 2025,
+        "meses": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "archivos": 12
+      },
+      {
+        "taxi": "yellow",
+        "anio": 2026,
+        "meses": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "archivos": 8
+      }
+    ],
+    "common_months": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "query_seconds_total": 65.5186,
+    "results": [
+      {
+        "sql": "sql/07_01_volumen_mensual.sql",
+        "sql_sha256": "2f046fc28ad4e3d576d6810dd826742a1e6245c0919e37f1ccf37aa01850e638",
+        "rows": 64
+      },
+      {
+        "sql": "sql/07_02_monto_mensual.sql",
+        "sql_sha256": "850ce66bb1e5c982a54209b8ace25332631ec27cd688b16a9086810764c484ce",
+        "rows": 64
+      },
+      {
+        "sql": "sql/07_03_ticket_periodo_comun.sql",
+        "sql_sha256": "61faa4eadfa5a607455f06139686d7631e8965a250ae4cafe7bf902e185cafff",
+        "rows": 6
+      },
+      {
+        "sql": "sql/07_04_viaje_tipico.sql",
+        "sql_sha256": "c635601a237b8503787f244c894a9dca4eef0cf9b758e25d817418da9fcb0851",
+        "rows": 6
+      },
+      {
+        "sql": "sql/07_05_mezcla_pagos.sql",
+        "sql_sha256": "dfee644b59e1ecbab4448afcfc4ce9cabe7ab5afc6a7e1e6d9c02160cc2f36c9",
+        "rows": 338
+      },
+      {
+        "sql": "sql/07_06_propina_tarjeta.sql",
+        "sql_sha256": "ee45c1ebe99c91183d5f33fef4ba0103323e1b7f7ca3b5b40a47fffbb2769008",
+        "rows": 6
+      },
+      {
+        "sql": "sql/07_07_zonas_top.sql",
+        "sql_sha256": "24d9f7edca876b511792bdce28f7e1f77ea8750f27b73175fb2db3d84a30572b",
+        "rows": 30
+      },
+      {
+        "sql": "sql/07_08_retencion_limpieza.sql",
+        "sql_sha256": "ba6dff62709c2bf8097ca18702d5eacc5ecfc5ea4cb12971fe2bbd4f9a6e3c0d",
+        "rows": 64
+      }
+    ]
+  },
+  "later_publisher_check": {
+    "scope": "current working tree after cosmetic collection and document labels were updated",
+    "publisher_file_sha256": "221ebc2c2407e48b269fe49b4596593979ee185f56e44dd82337e1d4549a4847",
+    "collection": "Lab 8 - Indicadores",
+    "status": "passed",
+    "specification_output": "/tmp/clean-dashboard-spec.json inside ephemeral container"
+  },
+  "scope_notes": [
+    "Full clone checks and fresh CSV execution cover the recorded cloned commit. Later cosmetic label changes were checked through the current publisher dry-run; CSVs were not rerun for those label changes.",
+    "This check uses a local repository clone, an existing Docker image and existing read-only data. It is not a remote fork clone or a new data download.",
+    "The original data/database were protected by the read-only mount; regenerated analytical files were written only in the clone."
+  ]
+}
