@@ -1,0 +1,650 @@
+{
+  "environment": {
+    "utc": "2026-10-09T02:06:14.599578+00:00",
+    "python": "3.11.14",
+    "duckdb": "1.5.5",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+    "logical_cpus": 12,
+    "threads": 4,
+    "memory_limit": "4GB",
+    "meminfo": "MemTotal:       16269960 kB\nMemFree:         8059040 kB\nMemAvailable:    9576060 kB\nBuffers:            1172 kB\nCached:           661508 kB\nSwapCached:            0 kB\nActive:           108560 kB\nInactive:        7370148 kB\nActive(anon):       9204 kB\nInactive(anon):  5831556 kB\nActive(file):      99356 kB\nInactive(file):  1538592 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       4194304 kB\nSwapFree:        4194304 kB\nDirty:               180 kB\nWriteback:             0 kB\nAnonPages:       6816020 kB\nMapped:           446644 kB\nShmem:             26912 kB\nKReclaimable:     127452 kB\nSlab:             206508 kB\nSReclaimable:     127452 kB\nSUnreclaim:        79056 kB\nKernelStack:        8112 kB\nPageTables:        22104 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    12329284 kB\nCommitted_AS:    4593812 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       38124 kB\nVmallocChunk:          0 kB\nPercpu:             5888 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:      4096 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nBalloon:               0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:       64512 kB\nDirectMap2M:     7168000 kB\nDirectMap1G:    18874368 kB\n",
+    "cgroup_memory_max": "max",
+    "cgroup_cpu_max": "max 100000"
+  },
+  "source_manifest": [
+    {
+      "path": "data/raw/green/2024/green_tripdata_2024-01.parquet",
+      "bytes": 1362284,
+      "sha256": "1512a953bed564ac68dcb622827424dfb4f68ad93c2a4572e50ef6ab0b09c1ad"
+    },
+    {
+      "path": "data/raw/green/2024/green_tripdata_2024-02.parquet",
+      "bytes": 1283805,
+      "sha256": "cb7eb405ee7e795c9fd6b8ad1b291f46f4e0a1cd60a57067b0aaca2420e8bc5d"
+    },
+    {
+      "path": "data/raw/green/2024/green_tripdata_2024-03.parquet",
+      "bytes": 1372372,
+      "sha256": "43dedd66dd556acfc38da679a174b6adc32e01dd6dccad14bdfdf1521a14abed"
+    },
+    {
+      "path": "data/raw/green/2024/green_tripdata_2024-04.parquet",
+      "bytes": 1346502,
+      "sha256": "af174977258a02f8f44c37534abc9a8b4eaa5ec6d2f9c2bc49782327628b608c"
+    },
+    {
+      "path": "data/raw/green/2024/green_tripdata_2024-05.parquet",
+      "bytes": 1453912,
+      "sha256": "aa8b1965ed36f0bda1b342930d5e6f5a89f8fe56d0c6c6d77d9c156b408aa0ea"
+    },
+    {
+      "path": "data/raw/green/2024/green_tripdata_2024-06.parquet",
+      "bytes": 1326194,
+      "sha256": "47e7c37dd39069c474364aee3d76c9ddc887a3f714e9bb550b5866fe0b89b9cd"
+    },
+    {
+      "path": "data/raw/green/2024/green_tripdata_2024-07.parquet",
+      "bytes": 1250973,
+      "sha256": "ce0d7591316050bea21da49e383eb733411e98ae17e114afcc7fbe4b36b116f2"
+    },
+    {
+      "path": "data/raw/green/2024/green_tripdata_2024-08.parquet",
+      "bytes": 1267079,
+      "sha256": "733210fb27cbe8cf8b0ad9f5d6fff03dfafcc8ff7c2beb1c1b707825d72f0376"
+    },
+    {
+      "path": "data/raw/green/2024/green_tripdata_2024-09.parquet",
+      "bytes": 1326186,
+      "sha256": "8f6aa8f3e8a2040fc161c7fbcb60e5418238b27e7e95998363572a4c977b69ce"
+    },
+    {
+      "path": "data/raw/green/2024/green_tripdata_2024-10.parquet",
+      "bytes": 1353731,
+      "sha256": "6e737b7c4edac91f865aa210f7110d0118a9992b3a96720936e090277c24edaa"
+    },
+    {
+      "path": "data/raw/green/2024/green_tripdata_2024-11.parquet",
+      "bytes": 1264688,
+      "sha256": "fde255b43d4158124921b7c085d9abf15de5c5a9128c2ce0fb4e2372bc1e0d4a"
+    },
+    {
+      "path": "data/raw/green/2024/green_tripdata_2024-12.parquet",
+      "bytes": 1312306,
+      "sha256": "1d708f58d29b0795a54ca11a36db6df61262986d122985f0fb52a56acc064bac"
+    },
+    {
+      "path": "data/raw/green/2025/green_tripdata_2025-01.parquet",
+      "bytes": 1178451,
+      "sha256": "84f3a121667157efcbf012c3566a6065df6f8e0312c678cb2f29cd72cc9c0f10"
+    },
+    {
+      "path": "data/raw/green/2025/green_tripdata_2025-02.parquet",
+      "bytes": 1117474,
+      "sha256": "b3ffe16a96ba0c68c8a8f8b10f049294ae6eb8d21f2e13b3fdbd452fa2e3498e"
+    },
+    {
+      "path": "data/raw/green/2025/green_tripdata_2025-03.parquet",
+      "bytes": 1253510,
+      "sha256": "d58e8d08e5e8a34c12f0d3f5ea049ae25c7c8215218a6af7bf6b8124ecde1c79"
+    },
+    {
+      "path": "data/raw/green/2025/green_tripdata_2025-04.parquet",
+      "bytes": 1269227,
+      "sha256": "6cf7ca2a4dd8907437e2e4b4728f62b353712ff09b322223a61e01aecee02411"
+    },
+    {
+      "path": "data/raw/green/2025/green_tripdata_2025-05.parquet",
+      "bytes": 1338798,
+      "sha256": "dcbf4afce26d1adc544a89ee1bdac88089b1bbaa300685144d31eee646da58bb"
+    },
+    {
+      "path": "data/raw/green/2025/green_tripdata_2025-06.parquet",
+      "bytes": 1212934,
+      "sha256": "451bc9f29382cca5dc33db05ff399cb137735d19c7449bbaa8b3348b0824f8e3"
+    },
+    {
+      "path": "data/raw/green/2025/green_tripdata_2025-07.parquet",
+      "bytes": 1188380,
+      "sha256": "bbd6f9e5955570521df5c6dd40c1a75b37cccd730fcaff4fb50bcd32d2d35f69"
+    },
+    {
+      "path": "data/raw/green/2025/green_tripdata_2025-08.parquet",
+      "bytes": 1149707,
+      "sha256": "ebaab192c199b850b0244e10c90622e472c1d4f2851168f950c9f75fe8db18d1"
+    },
+    {
+      "path": "data/raw/green/2025/green_tripdata_2025-09.parquet",
+      "bytes": 1209831,
+      "sha256": "932ea2cb6a56f83c4389148ce73427b07a63106375b607a361cd107cf7a32042"
+    },
+    {
+      "path": "data/raw/green/2025/green_tripdata_2025-10.parquet",
+      "bytes": 1205685,
+      "sha256": "b124d57fb63fe610d085ce9ebef1528c082932313d86133a33d9c7a000883fe6"
+    },
+    {
+      "path": "data/raw/green/2025/green_tripdata_2025-11.parquet",
+      "bytes": 1164775,
+      "sha256": "efcd45635c7982aa7ac832e5922c2e5495ebb5ce44e35491fea58d63fa7eba05"
+    },
+    {
+      "path": "data/raw/green/2025/green_tripdata_2025-12.parquet",
+      "bytes": 1171145,
+      "sha256": "d1e9def5085c3be62dc8f827c9bbb6d32455b8ba69921d3e823d95435ab155fc"
+    },
+    {
+      "path": "data/raw/green/2026/green_tripdata_2026-01.parquet",
+      "bytes": 991656,
+      "sha256": "b0b188cd9ded91a9dfc931d9250aaca09fe388355d87802422707c6fc14762e0"
+    },
+    {
+      "path": "data/raw/green/2026/green_tripdata_2026-02.parquet",
+      "bytes": 920753,
+      "sha256": "2f7e3f379b2a14d675aed7eb9318a663dfb290eb11dbc66efbee581b63c3c962"
+    },
+    {
+      "path": "data/raw/green/2026/green_tripdata_2026-03.parquet",
+      "bytes": 1082530,
+      "sha256": "60c8bdfc0aa7826a2d6d2a6cca0f0e0dcb2d8aa7336212a45382794bb55b9cc0"
+    },
+    {
+      "path": "data/raw/green/2026/green_tripdata_2026-04.parquet",
+      "bytes": 1075896,
+      "sha256": "e8dd2a0afde3fe8be942dd638fe1d946f8edbe5b377cf6c1d645e1206b3c7662"
+    },
+    {
+      "path": "data/raw/green/2026/green_tripdata_2026-05.parquet",
+      "bytes": 1102947,
+      "sha256": "15ff57840a1103d49298ad244492730ca4236b4de0d2758a689ded08bc332752"
+    },
+    {
+      "path": "data/raw/green/2026/green_tripdata_2026-06.parquet",
+      "bytes": 1075836,
+      "sha256": "08e214dcb285cb5cecb183635080e817ca24f0c6491eb7d387513fbe38258f97"
+    },
+    {
+      "path": "data/raw/green/2026/green_tripdata_2026-07.parquet",
+      "bytes": 1018250,
+      "sha256": "1e01084ab77643cc94e53ad7c30163dd7e8ef0be7b5bbf62bd45c19b7580ee87"
+    },
+    {
+      "path": "data/raw/green/2026/green_tripdata_2026-08.parquet",
+      "bytes": 1007530,
+      "sha256": "73539b4c19d1fc7e00a3809b09f0c1704283cff50398a022d9a01282c310e538"
+    },
+    {
+      "path": "data/raw/yellow/2024/yellow_tripdata_2024-01.parquet",
+      "bytes": 49961641,
+      "sha256": "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510"
+    },
+    {
+      "path": "data/raw/yellow/2024/yellow_tripdata_2024-02.parquet",
+      "bytes": 50349284,
+      "sha256": "c76c43c18c6c6664080dd920baab4928988d5786a6b65980792ca7cd796f9f20"
+    },
+    {
+      "path": "data/raw/yellow/2024/yellow_tripdata_2024-03.parquet",
+      "bytes": 60078280,
+      "sha256": "2d4cdc8fb96726cdd3803b13b02d2e61e71d45720aff0ebc693a8bdd1f249823"
+    },
+    {
+      "path": "data/raw/yellow/2024/yellow_tripdata_2024-04.parquet",
+      "bytes": 59133625,
+      "sha256": "ce37f736c7cf9e92164c850ef2b502a8f7bb590fc1804b6edbcb80293da01b89"
+    },
+    {
+      "path": "data/raw/yellow/2024/yellow_tripdata_2024-05.parquet",
+      "bytes": 62553128,
+      "sha256": "1974230be2b5a3ea92e47b5eb77f32dbf1de896d81ad8df4ab6faba52749ad23"
+    },
+    {
+      "path": "data/raw/yellow/2024/yellow_tripdata_2024-06.parquet",
+      "bytes": 59859922,
+      "sha256": "677cf14c8347f745b583f012fbdba072334c6c4efa17bfd6a64369f2ba30329c"
+    },
+    {
+      "path": "data/raw/yellow/2024/yellow_tripdata_2024-07.parquet",
+      "bytes": 52299432,
+      "sha256": "af12d6b04daeb78550799ae99933d495b27d715b6dbb0fad9bb750a4537d3070"
+    },
+    {
+      "path": "data/raw/yellow/2024/yellow_tripdata_2024-08.parquet",
+      "bytes": 51067350,
+      "sha256": "7315643dd16bafc03e27d9903edbfd35404c2550a695d0da0a3e73852d940cfb"
+    },
+    {
+      "path": "data/raw/yellow/2024/yellow_tripdata_2024-09.parquet",
+      "bytes": 61170186,
+      "sha256": "2f42e4a383a6635de803001462848d0aee2b47f6ce899126805d2d05361fb843"
+    },
+    {
+      "path": "data/raw/yellow/2024/yellow_tripdata_2024-10.parquet",
+      "bytes": 64346071,
+      "sha256": "d19fe05aa0b259af24eb47051735293287f1e6dc263ba04030ec1ab4c6ec2650"
+    },
+    {
+      "path": "data/raw/yellow/2024/yellow_tripdata_2024-11.parquet",
+      "bytes": 60658709,
+      "sha256": "5ef321876de5007a7c147a347389133fc94fd7ac28f82eb1d57d8f2cf05cfd3b"
+    },
+    {
+      "path": "data/raw/yellow/2024/yellow_tripdata_2024-12.parquet",
+      "bytes": 61524085,
+      "sha256": "41ebf7db80bebde60c58e5143c14cdf38ad04a0f3e3ff44215b3e240d55f6c78"
+    },
+    {
+      "path": "data/raw/yellow/2025/yellow_tripdata_2025-01.parquet",
+      "bytes": 59158238,
+      "sha256": "9af277e4c0d3f9deb30644da822981e1e7df6af58313170fd3aa8a474485488a"
+    },
+    {
+      "path": "data/raw/yellow/2025/yellow_tripdata_2025-02.parquet",
+      "bytes": 60343086,
+      "sha256": "037cba555a73663f3a51a2c27816e40e3feb364769942bdf122b9da31e377bd3"
+    },
+    {
+      "path": "data/raw/yellow/2025/yellow_tripdata_2025-03.parquet",
+      "bytes": 69964745,
+      "sha256": "20c4b77cce457b7cfdae77c5069ca7dc91c167f876a41467f4502ab69487a186"
+    },
+    {
+      "path": "data/raw/yellow/2025/yellow_tripdata_2025-04.parquet",
+      "bytes": 67352824,
+      "sha256": "6f98938de9380a3f85600533816f0dc0e6d9b5b210e485d623952bac599bbe28"
+    },
+    {
+      "path": "data/raw/yellow/2025/yellow_tripdata_2025-05.parquet",
+      "bytes": 77837865,
+      "sha256": "7ef46bcd0fceee7f8c0bb38a532be05bceefabb512d4bb0b32a7727dd862b15c"
+    },
+    {
+      "path": "data/raw/yellow/2025/yellow_tripdata_2025-06.parquet",
+      "bytes": 73542954,
+      "sha256": "1bea7f5b09c744414451fa7fef09fbc5a393ffb1621c859be6ba0df23a14e1b6"
+    },
+    {
+      "path": "data/raw/yellow/2025/yellow_tripdata_2025-07.parquet",
+      "bytes": 66943728,
+      "sha256": "1efa6a0458dc60341f7f81dcbb5015af731f42d1a109f4e0d594dd46970fd4ef"
+    },
+    {
+      "path": "data/raw/yellow/2025/yellow_tripdata_2025-08.parquet",
+      "bytes": 62293743,
+      "sha256": "b982ace703e3564d92e94edae5ec93515f4f1fb07a5b95e7404c32464c1a6a89"
+    },
+    {
+      "path": "data/raw/yellow/2025/yellow_tripdata_2025-09.parquet",
+      "bytes": 72432945,
+      "sha256": "cd39b9901f01d1fd752d45cbaec91ee5f68c4dddf9e261e938c1dbab404644c7"
+    },
+    {
+      "path": "data/raw/yellow/2025/yellow_tripdata_2025-10.parquet",
+      "bytes": 75267589,
+      "sha256": "e1f63caf331bc6230d9c6f757cb88e55fdc2bddde185fb414d2c947abdc773c3"
+    },
+    {
+      "path": "data/raw/yellow/2025/yellow_tripdata_2025-11.parquet",
+      "bytes": 71134255,
+      "sha256": "2cf2f3127f96d4d5dea30f8afe05119cf8e4ba57bd9e60b789d3f296fc8459ab"
+    },
+    {
+      "path": "data/raw/yellow/2025/yellow_tripdata_2025-12.parquet",
+      "bytes": 73701327,
+      "sha256": "eaba7ff61ebb6453fc6f673fda43d621380307f869b768b124992e8486c785e1"
+    },
+    {
+      "path": "data/raw/yellow/2026/yellow_tripdata_2026-01.parquet",
+      "bytes": 64165080,
+      "sha256": "8b3933fe6f0d7b6d8826613c0dd724edc680ff7c49e2bd4c7635c05102728637"
+    },
+    {
+      "path": "data/raw/yellow/2026/yellow_tripdata_2026-02.parquet",
+      "bytes": 58683353,
+      "sha256": "5352ca800f29c40a221ed5b0c6392c451fde7fcd236a73651bd5aea74713a26c"
+    },
+    {
+      "path": "data/raw/yellow/2026/yellow_tripdata_2026-03.parquet",
+      "bytes": 67891249,
+      "sha256": "d7af794a7ac06cbbb5afb4d1df9e86d84f2e878584de708ff2ffca4bd7d234d9"
+    },
+    {
+      "path": "data/raw/yellow/2026/yellow_tripdata_2026-04.parquet",
+      "bytes": 64818115,
+      "sha256": "e03b82d5722a6b21d4fbce011afd8837495202c0b5db77ff0d8d15dd80834ba8"
+    },
+    {
+      "path": "data/raw/yellow/2026/yellow_tripdata_2026-05.parquet",
+      "bytes": 69699174,
+      "sha256": "9aa5a1609e2bf07d9051b7d530de05b1019e12a560ecb2c59c137c8b3a8b6750"
+    },
+    {
+      "path": "data/raw/yellow/2026/yellow_tripdata_2026-06.parquet",
+      "bytes": 65465637,
+      "sha256": "f340c62a18885c56176433c9db28e97d0a8a14e6e49869276ad8afb20ebf088b"
+    },
+    {
+      "path": "data/raw/yellow/2026/yellow_tripdata_2026-07.parquet",
+      "bytes": 61685033,
+      "sha256": "3260bb629c2f334055f8a566cbb02c15476b15120c45d7ad0aae46fc4bb06612"
+    },
+    {
+      "path": "data/raw/yellow/2026/yellow_tripdata_2026-08.parquet",
+      "bytes": 59043961,
+      "sha256": "6683a025443afcbb28ac4f238fcbb6334767dc69fab4a16b1eb16a78dcd013cd"
+    },
+    {
+      "path": "data/raw/zones/taxi_zone_lookup.csv",
+      "bytes": 12331,
+      "sha256": "1a99e105092230f8620f301edcca7f80d3080642ff404d28ed957d3fa222c8ed"
+    }
+  ],
+  "views_sql_sha256": "240fc2758f8e734842a5e7ce4708febee38ea6a8d2e891848f8d05e281def187",
+  "database": "data/processed/taxi.duckdb",
+  "source_parquet_bytes": 2073081961,
+  "create_trips_seconds": 100.72642268100003,
+  "materialization_seconds_including_checkpoint": 106.60445480800013,
+  "columns": [
+    {
+      "name": "taxi",
+      "type": "VARCHAR",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "archivo",
+      "type": "VARCHAR",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "vendor_id",
+      "type": "INTEGER",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "pickup",
+      "type": "TIMESTAMP",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "dropoff",
+      "type": "TIMESTAMP",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "passenger_count",
+      "type": "BIGINT",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "trip_distance",
+      "type": "DOUBLE",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "ratecode_id",
+      "type": "BIGINT",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "store_and_fwd_flag",
+      "type": "VARCHAR",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "pu_location_id",
+      "type": "INTEGER",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "do_location_id",
+      "type": "INTEGER",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "payment_type",
+      "type": "BIGINT",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "fare_amount",
+      "type": "DOUBLE",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "extra",
+      "type": "DOUBLE",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "mta_tax",
+      "type": "DOUBLE",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "tip_amount",
+      "type": "DOUBLE",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "tolls_amount",
+      "type": "DOUBLE",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "improvement_surcharge",
+      "type": "DOUBLE",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "total_amount",
+      "type": "DOUBLE",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "congestion_surcharge",
+      "type": "DOUBLE",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "airport_fee",
+      "type": "DOUBLE",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "cbd_congestion_fee",
+      "type": "DOUBLE",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "trip_type",
+      "type": "BIGINT",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "request_source",
+      "type": "VARCHAR",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "anio_archivo",
+      "type": "INTEGER",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "mes_archivo",
+      "type": "INTEGER",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    },
+    {
+      "name": "duracion_min",
+      "type": "DOUBLE",
+      "null": "YES",
+      "key": null,
+      "default": null,
+      "extra": null
+    }
+  ],
+  "rows_by_taxi_year": [
+    {
+      "taxi": "green",
+      "year": 2024,
+      "rows": 660218,
+      "files": 12
+    },
+    {
+      "taxi": "green",
+      "year": 2025,
+      "rows": 591375,
+      "files": 12
+    },
+    {
+      "taxi": "green",
+      "year": 2026,
+      "rows": 337114,
+      "files": 8
+    },
+    {
+      "taxi": "yellow",
+      "year": 2024,
+      "rows": 41169720,
+      "files": 12
+    },
+    {
+      "taxi": "yellow",
+      "year": 2025,
+      "rows": 48722602,
+      "files": 12
+    },
+    {
+      "taxi": "yellow",
+      "year": 2026,
+      "rows": 29703355,
+      "files": 8
+    }
+  ],
+  "clean_rows_by_taxi_year": [
+    {
+      "taxi": "green",
+      "year": 2024,
+      "rows": 619164
+    },
+    {
+      "taxi": "green",
+      "year": 2025,
+      "rows": 555521
+    },
+    {
+      "taxi": "green",
+      "year": 2026,
+      "rows": 316958
+    },
+    {
+      "taxi": "yellow",
+      "year": 2024,
+      "rows": 39669674
+    },
+    {
+      "taxi": "yellow",
+      "year": 2025,
+      "rows": 44144384
+    },
+    {
+      "taxi": "yellow",
+      "year": 2026,
+      "rows": 28215140
+    }
+  ],
+  "zones_rows": 265,
+  "persistent_views": [
+    {
+      "name": "viajes",
+      "sql": "CREATE VIEW viajes AS SELECT * FROM viajes_materializados WHERE ((getvariable('anios') IS NULL) OR list_contains(getvariable('anios'), anio_archivo));"
+    },
+    {
+      "name": "viajes_limpios",
+      "sql": "CREATE VIEW viajes_limpios AS SELECT * FROM viajes WHERE ((\"year\"(pickup) = anio_archivo) AND (\"month\"(pickup) = mes_archivo) AND (duracion_min > 0) AND (duracion_min <= 360) AND (trip_distance > 0) AND (trip_distance <= 200) AND (fare_amount > 0) AND (total_amount > 0) AND (total_amount <= 1000) AND ((trip_distance / (duracion_min / 60)) <= 80));"
+    },
+    {
+      "name": "zonas",
+      "sql": "CREATE VIEW zonas AS SELECT * FROM zonas_materializadas;"
+    }
+  ],
+  "database_bytes": 4422381568
+}

@@ -1,0 +1,46 @@
+{
+  "environment": {
+    "utc": "2026-10-09T02:09:56.405052+00:00",
+    "python": "3.11.14",
+    "duckdb": "1.5.5",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+    "logical_cpus": 12,
+    "threads": 4,
+    "memory_limit": "4GB",
+    "meminfo": "MemTotal:       16269960 kB\nMemFree:        12242676 kB\nMemAvailable:   12739440 kB\nBuffers:            1388 kB\nCached:           643052 kB\nSwapCached:            0 kB\nActive:           281172 kB\nInactive:        2342896 kB\nActive(anon):       2544 kB\nInactive(anon):  2003980 kB\nActive(file):     278628 kB\nInactive(file):   338916 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       4194304 kB\nSwapFree:        4194304 kB\nDirty:                56 kB\nWriteback:             0 kB\nAnonPages:       1979692 kB\nMapped:           391924 kB\nShmem:             26912 kB\nKReclaimable:     127600 kB\nSlab:             207388 kB\nSReclaimable:     127600 kB\nSUnreclaim:        79788 kB\nKernelStack:        7628 kB\nPageTables:        10100 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    12329284 kB\nCommitted_AS:    3824872 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       37696 kB\nVmallocChunk:          0 kB\nPercpu:             5888 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nBalloon:               0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:       64512 kB\nDirectMap2M:     7168000 kB\nDirectMap1G:    18874368 kB\n",
+    "cgroup_memory_max": "max",
+    "cgroup_cpu_max": "max 100000"
+  },
+  "database_bytes": 4422381568,
+  "repetitions": 5,
+  "datasets": [
+    {
+      "name": "1_anio",
+      "years": [
+        2026
+      ]
+    },
+    {
+      "name": "2_anios",
+      "years": [
+        2024,
+        2026
+      ]
+    },
+    {
+      "name": "3_anios",
+      "years": [
+        2024,
+        2025,
+        2026
+      ]
+    }
+  ],
+  "timing": "perf_counter around execute + fetchall; setup, validation and CSV writing excluded",
+  "cache": "No OS cache eviction. First recorded execution is not guaranteed cold; later executions warm.",
+  "float_tolerance": {
+    "relative": 1e-10,
+    "absolute": 1e-08
+  },
+  "ordering": "Alternate Parquet/table on each repetition; initial order alternates by dataset/query."
+}
