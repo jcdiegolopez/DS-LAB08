@@ -1,0 +1,13 @@
+taxi,anio,tipo_registro,viajes,pct_del_anio,tarifa_promedio,tarifa_mediana,distancia_mediana,tarifa_por_milla
+yellow,2024,taximetro (pago 1-5),23196130,91.0,19.45,13.45,1.74,6.86
+yellow,2024,sin detalle (Flex Fare),2291064,9.0,20.34,17.9,2.44,7.1
+yellow,2025,taximetro (pago 1-5),23053754,80.4,19.28,12.96,1.71,6.84
+yellow,2025,sin detalle (Flex Fare),5624417,19.6,20.79,18.36,2.68,6.54
+yellow,2026,taximetro (pago 1-5),21181533,75.1,19.79,13.5,1.7,7.08
+yellow,2026,sin detalle (Flex Fare),7033607,24.9,25.86,23.16,2.89,8.1
+green,2024,taximetro (pago 1-5),398935,96.0,17.45,13.5,1.93,6.66
+green,2024,sin detalle (Flex Fare),16797,4.0,25.36,20.25,3.17,6.54
+green,2025,taximetro (pago 1-5),347962,93.6,18.05,13.79,1.97,6.72
+green,2025,sin detalle (Flex Fare),23868,6.4,17.54,13.6,3.94,4.34
+green,2026,taximetro (pago 1-5),274292,86.5,18.01,14.02,1.95,6.89
+green,2026,sin detalle (Flex Fare),42666,13.5,10.51,3.0,4.92,2.5

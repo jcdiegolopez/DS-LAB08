@@ -1,0 +1,3 @@
+taxi,viajes,tarifa_mediana,tarifa_promedio,total_promedio,tarifa_por_milla,recargo_congestion_prom,cargo_cbd_prom,peajes_prom,pct_aeropuerto_jfk_newark,pct_tarifa_negociada,pct_despacho_green
+yellow,28215140,15.7,21.3,30.25,7.37,2.26,0.54,0.55,2.63,0.55,
+green,316958,13.41,17.0,25.35,6.24,0.92,0.06,0.29,0.25,3.59,3.48

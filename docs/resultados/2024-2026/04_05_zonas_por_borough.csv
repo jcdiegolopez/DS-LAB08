@@ -1,0 +1,17 @@
+taxi,borough_origen,viajes,pct_del_taxi,pct_termina_mismo_borough
+yellow,Manhattan,97764929,87.27,93.4
+yellow,Queens,10304614,9.2,24.9
+yellow,Brooklyn,3038405,2.71,52.1
+yellow,Bronx,670163,0.6,37.1
+yellow,Unknown,217037,0.19,48.9
+yellow,N/A,23070,0.02,55.8
+yellow,Staten Island,7691,0.01,24.9
+yellow,EWR,3289,0.0,78.0
+green,Manhattan,908909,60.93,92.8
+green,Queens,346600,23.24,86.1
+green,Brooklyn,211900,14.21,73.6
+green,Bronx,22351,1.5,44.8
+green,Unknown,1137,0.08,60.8
+green,N/A,639,0.04,29.7
+green,Staten Island,106,0.01,66.0
+green,EWR,1,0.0,100.0

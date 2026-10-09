@@ -1,0 +1,3 @@
+taxi,viajes,distancia_p25,distancia_mediana,distancia_p75,distancia_p99,distancia_promedio,duracion_mediana_min,duracion_p99_min,velocidad_mediana_mph,pasajeros_promedio,pct_un_pasajero
+yellow,112029198,1.09,1.86,3.67,19.82,3.47,13.5,70.9,9.3,1.3,79.2
+green,1491643,1.29,2.03,3.54,17.15,3.11,12.5,65.0,10.2,1.31,83.0

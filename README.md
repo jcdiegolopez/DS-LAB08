@@ -244,7 +244,74 @@ verdes repartidos en esos archivos.
 
 ## Como ejecutar el analisis
 
-<!-- TODO -->
+El analisis (Ejercicios 3, 4 y 8) se hace con SQL de DuckDB **directamente
+sobre los Parquet** de `data/raw/`, sin importar los datos a una tabla.
+
+### 1. Datos necesarios
+
+Ademas de los viajes, el analisis usa la tabla de zonas de la TLC (borough y
+nombre de cada `LocationID`):
+
+```bash
+docker compose exec lab python scripts/download_data.py --anios 2024 2025 2026
+docker compose exec lab python scripts/download_zones.py
+```
+
+### 2. Como esta organizado
+
+| Archivo | Que contiene |
+|---|---|
+| `sql/00_vistas.sql` | Vistas sobre los Parquet: `yellow_raw`, `green_raw`, `viajes` (yellow + green unificados), `viajes_limpios` (reglas de limpieza R1-R6) y `zonas`. Se carga antes de cualquier consulta. |
+| `sql/03_*.sql` | Ejercicio 3: archivos, registros, esquema, muestra y calidad de datos |
+| `sql/04_*.sql` | Ejercicio 4: analisis exploratorio (P1-P10) |
+| `sql/08_*.sql` | Ejercicio 8: evolucion 2024-2026 |
+| `scripts/run_sql.py` | Ejecuta uno o varios `.sql` con las vistas cargadas |
+| `notebooks/analisis_exploratorio.ipynb` | Ejecuta los mismos `.sql` y genera las graficas de `docs/img/` |
+| `docs/ej3-consultas.md`, `docs/ej4-eda.md`, `docs/ej8-evolucion.md` | Documentacion de cada consulta: objetivo, fuente, resultado, decision e interpretacion |
+
+Cada archivo `.sql` tiene una sola consulta y empieza con un comentario que
+indica su objetivo y su fuente. Ninguna consulta nombra un archivo ni un anio:
+leen `data/raw/<tipo>/*/*.parquet`, asi que un mes o un anio nuevo entra sin
+cambiar el SQL.
+
+### 3. Ejecutar las consultas
+
+```bash
+# Una consulta
+docker compose exec lab python scripts/run_sql.py sql/03_02_registros.sql
+
+# Ejercicios 3 y 4 sobre 2026 (como se documentaron), guardando cada resultado en CSV
+docker compose exec lab python scripts/run_sql.py sql/03_*.sql sql/04_*.sql --anios 2026 --csv docs/resultados/2026
+
+# Las mismas consultas y las del Ejercicio 8 sobre todos los anios descargados
+docker compose exec lab python scripts/run_sql.py sql/03_*.sql sql/04_*.sql sql/08_*.sql --csv docs/resultados/2024-2026
+```
+
+`--anios` limita las vistas a esos anios (DuckDB ni abre los demas archivos);
+sin `--anios` se usa todo lo descargado.
+
+### 4. Ejecutar el notebook
+
+Abrir <http://localhost:8888>, entrar a `notebooks/analisis_exploratorio.ipynb`
+y ejecutar todas las celdas (*Run > Run All Cells*). O desde la terminal:
+
+```bash
+docker compose exec lab jupyter nbconvert --to notebook --execute --inplace notebooks/analisis_exploratorio.ipynb
+```
+
+Tarda alrededor de un minuto y vuelve a generar las graficas de `docs/img/`.
+
+Para usar las vistas desde otro notebook o script:
+
+```python
+import os, sys
+os.chdir("/workspace")                 # las vistas usan rutas relativas a la raiz
+sys.path.insert(0, "/workspace/scripts")
+from run_sql import conectar
+
+con = conectar([2026])                 # o conectar() para todos los anios
+con.sql("SELECT taxi, count(*) FROM viajes_limpios GROUP BY taxi").show()
+```
 
 ## Como reproducir los benchmarks
 

@@ -1,0 +1,11 @@
+taxi,vendor_id,payment_type,tarifas_negativas,pct_de_negativas,con_viaje_espejo
+yellow,2,0,2174402,58.11,3
+yellow,2,4,983530,26.28,872031
+yellow,2,2,365706,9.77,324109
+yellow,2,3,208501,5.57,187699
+yellow,2,1,4869,0.13,4505
+green,2,3,3288,0.09,3276
+green,2,4,1382,0.04,1346
+green,2,1,141,0.0,137
+green,2,2,41,0.0,33
+green,2,,27,0.0,0

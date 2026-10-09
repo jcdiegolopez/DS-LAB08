@@ -1,0 +1,11 @@
+taxi,distancia,viajes_tarjeta,pct_sin_propina,propina_pct_mediana,propina_promedio
+yellow,1. < 1 mi,4394459,5.9,32.4,2.47
+yellow,2. 1-3 mi,8929868,5.9,27.1,3.34
+yellow,3. 3-7 mi,2708237,13.2,23.7,4.94
+yellow,4. 7-15 mi,1541226,22.6,22.6,8.38
+yellow,5. 15+ mi,879239,15.9,21.4,13.2
+green,1. < 1 mi,27986,13.8,25.6,2.12
+green,2. 1-3 mi,124680,6.9,24.0,3.06
+green,3. 3-7 mi,44524,8.5,23.0,5.12
+green,4. 7-15 mi,11954,12.5,21.2,8.72
+green,5. 15+ mi,1814,15.5,20.3,15.01

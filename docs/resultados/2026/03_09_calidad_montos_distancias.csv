@@ -1,0 +1,3 @@
+taxi,anio,registros,distancia_cero,distancia_mayor_200mi,distancia_maxima,tarifa_negativa,tarifa_cero,total_negativo,total_mayor_1000,total_maximo,velocidad_mayor_80mph
+yellow,2026,29703355,952231,704,328522.2,157364,22387,161835,49,7053.5,7987
+green,2026,337114,12212,69,179830.92,999,4880,1023,1,1678.2,1158
